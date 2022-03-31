@@ -33,7 +33,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         graphics.setColor(Color.white);
         graphics.fillRect(1, 1, 692, 592);
         graphics.setColor(Color.yellow);
-        
+
     }
 
     @Override
