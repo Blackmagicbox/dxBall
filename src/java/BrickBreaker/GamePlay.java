@@ -37,20 +37,20 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     }
 
     public void paint(Graphics graphics) {
-        graphics.setColor(Color.darkGray);
+        graphics.setColor(Color.DARK_GRAY);
         graphics.fillRect(1, 1, 692, 592);
 
         map.draw((Graphics2D) graphics);
 
-        graphics.setColor(Color.white);
+        graphics.setColor(Color.WHITE);
         graphics.fillRect(0,0,3, 592);
         graphics.fillRect(0,0,692, 3);
         graphics.fillRect(691,1,3, 592);
 
-        graphics.setColor(Color.lightGray);
+        graphics.setColor(Color.LIGHT_GRAY);
         graphics.fillRect(playerX,550,100,8);
 
-        graphics.setColor(Color.red);
+        graphics.setColor(Color.GREEN);
         graphics.fillOval(ballposX, ballposY,20, 20);
         graphics.dispose();
     }
@@ -62,7 +62,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             // If ball collides, reverse the direction of the ball.
             // This is done by multiplying the direction by -1.
 
-            if(new Rectangle(ballposX, ballposY, 20, 30).intersects(new Rectangle(playerX, 560, 100, 8))) { // if ball collides with the player
+            if(new Rectangle(ballposX, ballposY, 20, 30).intersects(new Rectangle(playerX, 550, 100, 8))) { // if ball collides with the player
                 ballYdir = -ballYdir;
             }
 

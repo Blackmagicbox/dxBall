@@ -21,12 +21,15 @@ public class MapGenerator {
          brickHeight = 150 / row;
     }
 
-    public void draw(Graphics2D g) {
+    public void draw(Graphics2D graphics) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 if (map[i][j] > 0) {
-                    g.setColor(Color.BLUE);
-                    g.fillRect(j * brickWidth + 80, i * brickHeight + 50, brickWidth, brickHeight);
+                    graphics.setColor(Color.BLUE);
+                    graphics.fillRect(j * brickWidth + 80, i * brickHeight + 50, brickWidth, brickHeight);
+                    graphics.setStroke(new BasicStroke(5));
+                    graphics.setColor(Color.DARK_GRAY);
+                    graphics.drawRect(j * brickWidth + 80, i * brickHeight + 50, brickWidth, brickHeight);
                 }
             }
         }
