@@ -62,9 +62,35 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             // If ball collides, reverse the direction of the ball.
             // This is done by multiplying the direction by -1.
 
-            if(new Rectangle(ballposX, ballposY, 20, 30).intersects(new Rectangle(playerX, 550, 100, 8))) { // if ball collides with the player
+            if (new Rectangle(ballposX, ballposY, 20, 30).intersects(new Rectangle(playerX, 550, 100, 8))) { // if ball collides with the player
                 ballYdir = -ballYdir;
             }
+            
+            // If ball collides with the blocks, the block disappear and the ball bounces.
+            for( int i = 0; i < map.map.length; i++ ) {
+                for( int j = 0; j < map.map[0].length; j++ ) {
+                    if( map.map[i][j] > 0 ) {
+                        int brickX = j * map.brickWidth + 80;
+                        int brickY = i * map.brickHeight + 50;
+                        int brickWidth = map.brickWidth;
+                        int brickHeight = map.brickHeight;
+
+                        Rectangle brickRect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
+                        Rectangle ballRect = new Rectangle(ballposX, ballposY, 20, 20);
+                        Rectangle brickRectTop = new Rectangle(brickX, brickY - ballYdir, brickWidth, ballYdir);
+                        Rectangle brickRectBottom = new Rectangle(brickX, brickY + brickHeight, brickWidth, ballYdir);
+                        Rectangle brickRectLeft = new Rectangle(brickX - ballXdir, brickY, ballXdir, brickHeight);
+                        Rectangle brickRectRight = new Rectangle(brickX + brickWidth, brickY, ballXdir, brickHeight);
+
+                        if( brickRect.intersects(ballRect) || brickRectTop.intersects(ballRect) || brickRectBottom.intersects(ballRect) || brickRectLeft.intersects(ballRect) || brickRectRight.intersects(ballRect) ) {
+                            map.setBrickValue(i, j, 0);
+                            score++;
+                            ballXdir = -ballXdir;
+                        }
+                    }
+                }
+            }
+
 
             // If ball collides with the top wall, reverse the direction of the ball.
             ballposX += ballXdir;

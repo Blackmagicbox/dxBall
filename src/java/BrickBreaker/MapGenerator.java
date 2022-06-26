@@ -34,4 +34,8 @@ public class MapGenerator {
             }
         }
     }
+
+    public void setBrickValue(int row, int col, int value) {
+        map[row][col] = value;
+    }
 }
