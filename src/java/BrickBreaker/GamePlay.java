@@ -25,10 +25,10 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     private int ballXdir = -10;
     private int ballYdir = -10;
 
-    private MapGenerator map;
+    private MapGenerator bricksMapGenerator;
 
     public GamePlay() {
-        map = new MapGenerator(3, 7);
+        bricksMapGenerator = new MapGenerator(3, 7);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -40,7 +40,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
         graphics.setColor(Color.DARK_GRAY);
         graphics.fillRect(1, 1, 692, 592);
 
-        map.draw((Graphics2D) graphics);
+        bricksMapGenerator.draw((Graphics2D) graphics);
 
         graphics.setColor(Color.WHITE);
         graphics.fillRect(0,0,3, 592);
@@ -67,13 +67,13 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             }
             
             // If ball collides with the blocks, the block disappear and the ball bounces.
-            for( int i = 0; i < map.map.length; i++ ) {
-                for( int j = 0; j < map.map[0].length; j++ ) {
-                    if( map.map[i][j] > 0 ) {
-                        int brickX = j * map.brickWidth + 80;
-                        int brickY = i * map.brickHeight + 50;
-                        int brickWidth = map.brickWidth;
-                        int brickHeight = map.brickHeight;
+            for(int i = 0; i < bricksMapGenerator.map.length; i++ ) {
+                for(int j = 0; j < bricksMapGenerator.map[0].length; j++ ) {
+                    if( bricksMapGenerator.map[i][j] > 0 ) {
+                        int brickX = j * bricksMapGenerator.brickWidth + 80;
+                        int brickY = i * bricksMapGenerator.brickHeight + 50;
+                        int brickWidth = bricksMapGenerator.brickWidth;
+                        int brickHeight = bricksMapGenerator.brickHeight;
 
                         Rectangle brickRect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
                         Rectangle ballRect = new Rectangle(ballposX, ballposY, 20, 20);
@@ -82,9 +82,11 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                         Rectangle brickRectLeft = new Rectangle(brickX - ballXdir, brickY, ballXdir, brickHeight);
                         Rectangle brickRectRight = new Rectangle(brickX + brickWidth, brickY, ballXdir, brickHeight);
 
+
                         if( brickRect.intersects(ballRect) || brickRectTop.intersects(ballRect) || brickRectBottom.intersects(ballRect) || brickRectLeft.intersects(ballRect) || brickRectRight.intersects(ballRect) ) {
-                            map.setBrickValue(i, j, 0);
-                            score++;
+                            bricksMapGenerator.setBrickValue(i, j, 0);
+                            totalBricks--;
+                            score += 5;
                             ballXdir = -ballXdir;
                         }
                     }
