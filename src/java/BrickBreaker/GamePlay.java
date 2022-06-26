@@ -37,20 +37,20 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
     }
 
     public void paint(Graphics graphics) {
-        graphics.setColor(Color.white);
+        graphics.setColor(Color.darkGray);
         graphics.fillRect(1, 1, 692, 592);
 
         map.draw((Graphics2D) graphics);
 
-        graphics.setColor(Color.yellow);
+        graphics.setColor(Color.white);
         graphics.fillRect(0,0,3, 592);
         graphics.fillRect(0,0,692, 3);
         graphics.fillRect(691,1,3, 592);
 
-        graphics.setColor(Color.blue);
+        graphics.setColor(Color.lightGray);
         graphics.fillRect(playerX,550,100,8);
 
-        graphics.setColor(Color.green);
+        graphics.setColor(Color.red);
         graphics.fillOval(ballposX, ballposY,20, 20);
         graphics.dispose();
     }
