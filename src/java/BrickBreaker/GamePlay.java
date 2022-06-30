@@ -38,20 +38,50 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
 
     public void paint(Graphics graphics) {
         graphics.setColor(Color.DARK_GRAY);
-        graphics.fillRect(1, 1, 692, 592);
+        graphics.fillRect(1, 1, 692, 594);
 
         bricksMapGenerator.draw((Graphics2D) graphics);
 
         graphics.setColor(Color.WHITE);
-        graphics.fillRect(0,0,3, 592);
-        graphics.fillRect(0,0,692, 3);
-        graphics.fillRect(691,1,3, 592);
+        graphics.fillRect(0, 0, 3, 594);
+        graphics.fillRect(0, 0, 692, 3);
+        graphics.fillRect(691, 1, 3, 594);
 
         graphics.setColor(Color.LIGHT_GRAY);
-        graphics.fillRect(playerX,550,100,8);
+        graphics.fillRect(playerX, 550, 100, 8);
 
         graphics.setColor(Color.GREEN);
-        graphics.fillOval(ballposX, ballposY,20, 20);
+        graphics.fillOval(ballposX, ballposY, 20, 20);
+
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("sans", Font.BOLD, 25));
+        graphics.drawString("Score: " + score, 350, 30);
+
+        if(totalBricks <= 0) {
+            play = false;
+            timer.stop();
+            graphics.setColor(Color.WHITE);
+            graphics.setFont(new Font("sans", Font.BOLD, 50));
+            graphics.drawString("You Win", 350, 300);
+        }
+
+        if (ballposY > 592) {
+            play = false;
+            ballXdir = 0;
+            ballYdir = 0;
+            ballposX = 120;
+            ballposY = 350;
+            timer.stop();
+
+            graphics.setColor(Color.RED);
+            graphics.setFont(new Font("sans", Font.BOLD, 50));
+            graphics.drawString("Game Over", 200, 300);
+
+            graphics.setFont(new Font("sans", Font.BOLD, 20));
+            graphics.drawString("Press Enter to play again", 200, 350);
+
+        }
+
         graphics.dispose();
     }
 
@@ -65,11 +95,11 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
             if (new Rectangle(ballposX, ballposY, 20, 30).intersects(new Rectangle(playerX, 550, 100, 8))) { // if ball collides with the player
                 ballYdir = -ballYdir;
             }
-            
+
             // If ball collides with the blocks, the block disappear and the ball bounces.
-            for(int i = 0; i < bricksMapGenerator.map.length; i++ ) {
-                for(int j = 0; j < bricksMapGenerator.map[0].length; j++ ) {
-                    if( bricksMapGenerator.map[i][j] > 0 ) {
+            for (int i = 0; i < bricksMapGenerator.map.length; i++) {
+                for (int j = 0; j < bricksMapGenerator.map[0].length; j++) {
+                    if (bricksMapGenerator.map[i][j] > 0) {
                         int brickX = j * bricksMapGenerator.brickWidth + 80;
                         int brickY = i * bricksMapGenerator.brickHeight + 50;
                         int brickWidth = bricksMapGenerator.brickWidth;
@@ -83,7 +113,7 @@ public class GamePlay extends JPanel implements KeyListener, ActionListener {
                         Rectangle brickRectRight = new Rectangle(brickX + brickWidth, brickY, ballXdir, brickHeight);
 
 
-                        if( brickRect.intersects(ballRect) || brickRectTop.intersects(ballRect) || brickRectBottom.intersects(ballRect) || brickRectLeft.intersects(ballRect) || brickRectRight.intersects(ballRect) ) {
+                        if (brickRect.intersects(ballRect) || brickRectTop.intersects(ballRect) || brickRectBottom.intersects(ballRect) || brickRectLeft.intersects(ballRect) || brickRectRight.intersects(ballRect)) {
                             bricksMapGenerator.setBrickValue(i, j, 0);
                             totalBricks--;
                             score += 5;
